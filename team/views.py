@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import SignupForm
+from .forms import SignupForm, TeamForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from .models import Team, User
@@ -37,9 +37,6 @@ def logout_views(request):
     logout(request)
     return redirect('home')
 
-            
-
-
 def home(request):
     return render(request, 'team/home.html')
 
@@ -49,3 +46,18 @@ def explore(request):
     
     return render(request, 'team/explore.html', {'teams': teams})
 
+@login_required
+def add_team(request):
+    
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            form = TeamForm(request.POST, request.FILES)
+            
+            if form.is_valid():
+                form.save()
+                return redirect('explore')
+        else:
+            form = TeamForm()
+        return render(request, 'team/add_team.html', {'forms':form})
+    else:
+        return redirect('explore')

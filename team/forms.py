@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import User
+from .models import User, Team
 
 
 user = get_user_model()
@@ -17,4 +17,11 @@ class SignupForm(forms.ModelForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('This Email already exist!!')
         return email
+    
+class TeamForm(forms.ModelForm):
+    
+    class Meta:
+        model = Team
+        fields = ['name', 'location', 'image'] 
+
         
