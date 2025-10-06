@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Page Header -->
+<header class="bg-gray-900 text-white py-6 shadow-md text-white">
+  <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+    <h1 class="text-3xl font-bold">🏆 Explore Teams</h1>
+    <div class="flex gap-5">
+      <a href="{% url 'home' %}" class="border border-white px-5 py-2 rounded-full hover:bg-white hover:text-black transition">
+      ADD TEAM
+      </a>
+      <a href="{% url 'home' %}" class="border border-white px-5 py-2 rounded-full hover:bg-white hover:text-black transition">
+      Back Home
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Teams Section -->
+<section class="py-16 bg-gray-800 text-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center mb-12">All Football Teams</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    {% for team in teams %}
+    <div class="bg-gray-200 rounded-2xl shadow-lg text-center hover:shadow-2xl transition">
+      {% if team.image %}
+        <img src="{{ team.image.url }}" alt="{{ team.name }}" class="w-full h-56 rounded-t-2xl object-cover">
+      {% else %}
+        <p> No Image Found!</p>
+      {% endif %}
+        <div class="p-5">
+          <h2 class="text-xl font-semibold mb-2 text-lime-900">{{team.name}}</h2>
+          <p class="text-gray-600 mt-2"> {{team.location}} </p>
+          <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 w-full">View Team</button>
+        </div>
+    </div>
+    {% empty %}
+      <p>No team Found!</p>
+    {% endfor %}
+  </div>
+
+      
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
+
+
+
